@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.myapplication.R;
-import com.example.user.myapplication.entity.SOFResponse;
+import com.example.user.myapplication.entity.Items;
 
 import java.util.List;
 
 public class SOFResponseAdapter  extends RecyclerView.Adapter<SOFResponseViewHolder>  {
 
-    private List<SOFResponse> dataSet;
+    private List<Items> dataSet;
 
     @NonNull
     @Override
@@ -25,11 +25,11 @@ public class SOFResponseAdapter  extends RecyclerView.Adapter<SOFResponseViewHol
 
     @Override
     public void onBindViewHolder(@NonNull SOFResponseViewHolder holder, int i) {
-        holder.tvQuestTitle.setText(dataSet.get(i).getQuestTitle());
-        holder.tvQuestAuthor.setText(dataSet.get(i).getQuestAuthor());
+        holder.tvQuestTitle.setText(dataSet.get(0).getItems().get(i).getTitle());
+        holder.tvQuestAuthor.setText(dataSet.get(0).getItems().get(i).getOwner().getDisplayName());
         holder.ibExpand.setOnClickListener(btn -> {
-            holder.tvAnswerScore.setText(dataSet.get(i).getAnswScore());
-            holder.tvAnswerLink.setText(dataSet.get(i).getAnswLink());
+            holder.tvAnswerScore.setText(dataSet.get(0).getItems().get(i).getScore());
+            holder.tvAnswerLink.setText(dataSet.get(0).getItems().get(i).getAcceptedAnswerId());
         });
 
     }
@@ -39,7 +39,7 @@ public class SOFResponseAdapter  extends RecyclerView.Adapter<SOFResponseViewHol
         return 0;
     }
 
-    public void setDataSet(List<SOFResponse> result) {
+    public void setDataSet(List<Items> result) {
         this.dataSet = result;
     }
 }
