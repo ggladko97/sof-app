@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,14 +33,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         adapter = new SOFResponseAdapter();
         presenter = new MainActivityPresenter();
         presenter.bindView(MainActivity.this);
+
         btnSearch.setOnClickListener(btn -> {
             if (validateInputs()) {
+                Log.i("MainActivity", "VAlidatin=true");
                 presenter.searchQuestions(etSearch.getText().toString());
             }
         });
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        rcViewResult.setLayoutManager(layoutManager);
-        rcViewResult.setAdapter(adapter);
+
+
     }
 
     private boolean validateInputs() {
@@ -58,14 +60,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
 
     @Override
-    public void displaySearchResult(List<Items> result) {
+    public void displaySearchResult(Items result) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         adapter.setDataSet(result);
+        rcViewResult.setLayoutManager(layoutManager);
+        rcViewResult.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void updateAdapterDataSet(List<Items> responseBody) {
+    public void updateAdapterDataSet(Items responseBody) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         adapter.setDataSet(responseBody);
+        rcViewResult.setLayoutManager(layoutManager);
+        rcViewResult.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

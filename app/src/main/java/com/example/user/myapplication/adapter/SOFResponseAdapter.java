@@ -2,6 +2,7 @@ package com.example.user.myapplication.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,8 @@ import java.util.List;
 
 public class SOFResponseAdapter  extends RecyclerView.Adapter<SOFResponseViewHolder>  {
 
-    private List<Items> dataSet;
+    private Items dataSet;
+    private boolean IS_EXPANDED = false;
 
     @NonNull
     @Override
@@ -25,21 +27,29 @@ public class SOFResponseAdapter  extends RecyclerView.Adapter<SOFResponseViewHol
 
     @Override
     public void onBindViewHolder(@NonNull SOFResponseViewHolder holder, int i) {
-        holder.tvQuestTitle.setText(dataSet.get(0).getItems().get(i).getTitle());
-        holder.tvQuestAuthor.setText(dataSet.get(0).getItems().get(i).getOwner().getDisplayName());
+
+        holder.tvQuestTitle.setText(dataSet.getItems().get(i).getTitle());
+        holder.tvQuestAuthor.setText(dataSet.getItems().get(i).getOwner().getDisplayName());
         holder.ibExpand.setOnClickListener(btn -> {
-            holder.tvAnswerScore.setText(dataSet.get(0).getItems().get(i).getScore());
-            holder.tvAnswerLink.setText(dataSet.get(0).getItems().get(i).getAcceptedAnswerId());
+            if (!IS_EXPANDED) {
+                holder.llQuestAnsw.setVisibility(View.VISIBLE);
+                holder.tvAnswerScore.setText(String.valueOf(dataSet.getItems().get(i).getScore()));
+                holder.tvAnswerLink.setText(String.valueOf(dataSet.getItems().get(i).getAcceptedAnswerId()));
+                IS_EXPANDED = true;
+            } else {
+                holder.llQuestAnsw.setVisibility(View.GONE);
+                IS_EXPANDED = false;
+            }
         });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataSet.getItems().size();
     }
 
-    public void setDataSet(List<Items> result) {
+    public void setDataSet(Items result) {
         this.dataSet = result;
     }
 }

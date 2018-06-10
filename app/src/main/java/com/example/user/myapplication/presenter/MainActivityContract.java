@@ -7,9 +7,9 @@ import java.util.List;
 public interface MainActivityContract {
     interface View {
 //        void loadMainScreen();
-        void displaySearchResult(List<Items> result);
+        void displaySearchResult(Items result);
 
-        void updateAdapterDataSet(List<Items> responseBody);
+        void updateAdapterDataSet(Items responseBody);
 
         void displayError();
     }

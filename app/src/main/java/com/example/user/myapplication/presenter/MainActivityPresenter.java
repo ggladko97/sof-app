@@ -1,6 +1,9 @@
 package com.example.user.myapplication.presenter;
 
+import android.util.Log;
+
 import com.example.user.myapplication.MainActivity;
+import com.example.user.myapplication.entity.Item;
 import com.example.user.myapplication.entity.Items;
 import com.example.user.myapplication.http.RetrofitFactory;
 import com.example.user.myapplication.http.SOFService;
@@ -34,15 +37,22 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     public void searchQuestions(String s) {
         //retrofit call
         //view.update
-        sofService.searchQuestions(s).enqueue(new Callback<List<Items>>() {
+        sofService.searchQuestions("e)qbQKklgtQv*9T9AsxdXQ((","desc", "activity", "stackoverflow", s).enqueue(new Callback<Items>() {
             @Override
-            public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
-                List<Items> responseBody = response.body();
+            public void onResponse(Call<Items> call, Response<Items> response) {
+                Log.i("MAP: ", "SUCCESS " + call.request().url().toString());
+
+                if(response.body() != null) {
+                    Log.i("MAP", "response is not null " +((Items) response.body()).toString());
+                }
+//                Log.i("MAP items: ", items.toString());
+                Items responseBody = response.body();
                 view.updateAdapterDataSet(responseBody);
             }
 
             @Override
-            public void onFailure(Call<List<Items>> call, Throwable t) {
+            public void onFailure(Call<Items> call, Throwable t) {
+                Log.e("MAP: ", t.getMessage());
                 view.displayError();
             }
         });
