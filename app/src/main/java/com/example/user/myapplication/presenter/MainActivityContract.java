@@ -6,11 +6,7 @@ import java.util.List;
 
 public interface MainActivityContract {
     interface View {
-//        void loadMainScreen();
-        void displaySearchResult(Items result);
-
         void updateAdapterDataSet(Items responseBody);
-
         void displayError();
     }
 

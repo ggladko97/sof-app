@@ -11,5 +11,10 @@ import retrofit2.http.Query;
 
 public interface SOFService {
     @GET("questions")
-    Call<Items> searchQuestions(@Query("key") String tag, @Query("order") String order, @Query("sort") String sort, @Query("site") String site, @Query("tagged") String tagged);
+    Call<Items> searchQuestions(@Query("key") String tag,
+                                @Query("order") String order,
+                                @Query("sort") String sort,
+                                @Query("site") String site,
+                                @Query("tagged") String tagged);
+
 }

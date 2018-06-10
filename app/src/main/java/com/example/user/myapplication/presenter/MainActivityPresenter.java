@@ -18,13 +18,13 @@ import retrofit2.Retrofit;
 public class MainActivityPresenter implements MainActivityContract.Presenter {
 
     private MainActivity view;
-    private Retrofit retrofit;
     private SOFService sofService;
+    private static final String SOF_APP_KEY = "e)qbQKklgtQv*9T9AsxdXQ((";
 
     @Override
     public void bindView(MainActivityContract.View view) {
         this.view = (MainActivity) view;
-        retrofit = RetrofitFactory.getRetrofit();
+        Retrofit retrofit = RetrofitFactory.getRetrofit();
         sofService = retrofit.create(SOFService.class);
     }
 
@@ -37,22 +37,17 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     public void searchQuestions(String s) {
         //retrofit call
         //view.update
-        sofService.searchQuestions("e)qbQKklgtQv*9T9AsxdXQ((","desc", "activity", "stackoverflow", s).enqueue(new Callback<Items>() {
+        sofService.searchQuestions(SOF_APP_KEY,"desc", "activity", "stackoverflow", s).enqueue(new Callback<Items>() {
             @Override
             public void onResponse(Call<Items> call, Response<Items> response) {
-                Log.i("MAP: ", "SUCCESS " + call.request().url().toString());
-
-                if(response.body() != null) {
-                    Log.i("MAP", "response is not null " +((Items) response.body()).toString());
-                }
-//                Log.i("MAP items: ", items.toString());
+                Log.i("MainActivityPresenter", "Request successful at: " + call.request().url().toString());
                 Items responseBody = response.body();
                 view.updateAdapterDataSet(responseBody);
             }
 
             @Override
             public void onFailure(Call<Items> call, Throwable t) {
-                Log.e("MAP: ", t.getMessage());
+                Log.e("MainActivityPresenter", t.getMessage());
                 view.displayError();
             }
         });

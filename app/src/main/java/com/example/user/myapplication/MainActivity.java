@@ -46,27 +46,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     private boolean validateInputs() {
         //set up validation process
-        if (!etSearch.getText().toString().isEmpty()) {
-            return true;
-        }
-        return false;
+        return !etSearch.getText().toString().isEmpty();
     }
 
     private void initViews() {
         btnSearch = findViewById(R.id.btnSearch);
         etSearch = findViewById(R.id.etSearch);
         rcViewResult = findViewById(R.id.rcViewResult);
-    }
-
-
-    @Override
-    public void displaySearchResult(Items result) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        adapter.setDataSet(result);
-        rcViewResult.setLayoutManager(layoutManager);
-        rcViewResult.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
     }
 
     @Override
